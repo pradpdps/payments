@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:payments/model/NativeResponse.dart';
 import 'dart:convert';
-
 import 'package:payments/utils/native_service.dart';
-
 import 'package:payments/payments.dart';
 
 class Products extends StatefulWidget {
