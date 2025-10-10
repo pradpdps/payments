@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Payments extends StatefulWidget {
-  const Payments({super.key});
+  const Payments(this.totalAmount, {super.key});
+  final double totalAmount;
 
   @override
   State<Payments> createState() => _PaymentsState();
@@ -58,7 +59,7 @@ class _PaymentsState extends State<Payments> {
               ),
               SizedBox(height: 8),
               Text(
-                '\$125.00',
+                '\$${widget.totalAmount.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
