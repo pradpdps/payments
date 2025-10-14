@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payments/model/NativeResponse.dart';
+import 'package:payments/model/nativeResponse.dart';
 import 'dart:convert';
 import 'package:payments/utils/native_service.dart';
 import 'package:payments/payments.dart';
@@ -14,9 +14,8 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   List<Map<String, dynamic>> _products = [];
   bool isLoading = true;
-  List<Map<String, dynamic>> _cart = [];
+  final List<Map<String, dynamic>> _cart = [];
 
-  // Function to parse JSON and extract product list
   List<Map<String, dynamic>> _extractProductsFromJson(String jsonStr) {
     final List<dynamic> decoded = json.decode(jsonStr);
     return decoded.map((e) => Map<String, dynamic>.from(e)).toList();
