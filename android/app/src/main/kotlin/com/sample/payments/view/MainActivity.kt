@@ -1,11 +1,10 @@
-package com.sample.payments
+package com.sample.payments.view
 
-import com.sample.payments.MainActivity.Companion.CHANNEL
+import com.sample.payments.controller.MainController
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-
 
 class MainActivity: FlutterActivity(){
     val mainController: MainController by lazy {
