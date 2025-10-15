@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:payments/products.dart';
+import 'package:payments/ui/products.dart';
 
 void main() {
   testWidgets('Products widget shows loading indicator initially',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:payments/payments.dart';
+import 'package:payments/ui/payments.dart';
 
 void main() {
   testWidgets('Payments screen displays correct info',
