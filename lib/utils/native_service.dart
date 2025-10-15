@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import '../model/nativeResponse.dart';
+import '../model/native_response.dart';
 
 class NativeService {
   static final platform = MethodChannel('com.example.myapp/native');

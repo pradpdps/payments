@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payments/model/nativeResponse.dart';
+import 'package:payments/model/native_response.dart';
 import 'dart:convert';
 import 'package:payments/utils/native_service.dart';
 import 'package:payments/payments.dart';

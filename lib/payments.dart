@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Payments extends StatefulWidget {
-  const Payments(this.totalAmount, {super.key});
-  final double totalAmount;
+  final double amount;
+  const Payments(this.amount, {super.key});
 
   @override
   State<Payments> createState() => _PaymentsState();
 }
 
 class _PaymentsState extends State<Payments> {
-  int _selectedMethod = 0; // 0: Visa, 1: Apple Pay, 2: Bank Transfer
+  int selectedMethod = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,140 +28,144 @@ class _PaymentsState extends State<Payments> {
       backgroundColor: const Color(0xFFF5F6F7),
       body: Center(
         child: Container(
-          width: 380,
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 16,
-                offset: Offset(0, 4),
+          constraints: BoxConstraints(maxWidth: 400),
+          padding: const EdgeInsets.all(8),
+          child: SingleChildScrollView(
+            child: Card(
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
               ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Select Payment Method',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Paying to: Online Store Inc.',
-                style: TextStyle(fontSize: 16, color: Colors.black87),
-              ),
-              SizedBox(height: 8),
-              Text(
-                '\$${widget.totalAmount.toStringAsFixed(2)}',
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 24),
-              Text(
-                'Saved Methods',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 12),
-              _buildPaymentMethod(
-                icon: Icon(Icons.credit_card, size: 32),
-                label: 'Visa **** 134',
-                selected: _selectedMethod == 0,
-                onTap: () {
-                  setState(() {
-                    _selectedMethod = 0;
-                  });
-                },
-              ),
-              SizedBox(height: 12),
-              _buildPaymentMethod(
-                icon: Icon(Icons.apple, size: 32),
-                label: 'Apple Pay',
-                selected: _selectedMethod == 1,
-                onTap: () {
-                  setState(() {
-                    _selectedMethod = 1;
-                  });
-                },
-              ),
-              SizedBox(height: 12),
-              _buildPaymentMethod(
-                icon: Icon(Icons.account_balance, size: 32),
-                label: 'Bank Transfer',
-                selected: _selectedMethod == 2,
-                onTap: () {
-                  setState(() {
-                    _selectedMethod = 2;
-                  });
-                },
-              ),
-              SizedBox(height: 24),
-              Text(
-                'Other Method',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 4),
-              GestureDetector(
-                onTap: () {},
-                child: Text(
-                  'Add New Bank Account',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFF00796B),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              SizedBox(height: 24),
-              Row(
-                children: [
-                  Icon(Icons.lock, color: Color(0xFF00796B)),
-                  SizedBox(width: 8),
-                  Text(
-                    'Secure connection & encrypted data',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 16,
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select Payment Method',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 32),
-              Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF00796B),
-                    padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                    SizedBox(height: 16),
+                    Text(
+                      'Paying to: Online Store Inc.',
+                      style: TextStyle(fontSize: 16, color: Colors.black87),
                     ),
-                  ),
-                  onPressed: _showPaymentDialog,
-                  child: Text(
-                    'Pay Now',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                    SizedBox(height: 8),
+                    Text(
+                      '\$${widget.amount.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 24),
+                    Text(
+                      'Saved Methods',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    _buildPaymentMethod(
+                      icon: Icon(Icons.credit_card, size: 32),
+                      label: 'Visa **** 134',
+                      selected: selectedMethod == 0,
+                      onTap: () {
+                        setState(() {
+                          selectedMethod = 0;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 12),
+                    _buildPaymentMethod(
+                      icon: Icon(Icons.apple, size: 32),
+                      label: 'Apple Pay',
+                      selected: selectedMethod == 1,
+                      onTap: () {
+                        setState(() {
+                          selectedMethod = 1;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 12),
+                    _buildPaymentMethod(
+                      icon: Icon(Icons.account_balance, size: 32),
+                      label: 'Bank Transfer',
+                      selected: selectedMethod == 2,
+                      onTap: () {
+                        setState(() {
+                          selectedMethod = 2;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      'Other Method',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        'Add New Bank Account',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF00796B),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Row(
+                      children: [
+                        Icon(Icons.lock, color: Color(0xFF00796B)),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'Secure connection & encrypted data',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 32),
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF00796B),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 48, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: _showPaymentDialog,
+                        child: Text(
+                          'Pay Now',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
