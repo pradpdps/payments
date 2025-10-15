@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:payments/ui/products.dart';
+
+import '../model/native_response.dart';
+import '../utils/native_service.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -16,6 +21,21 @@ class _LoginState extends State<Login> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<String?> _loginUser() async {
+    String? accessToken;
+    NativeResponse loginResponse = await NativeService.login("gokul", "12345678");
+    if (loginResponse.success == true && loginResponse.data != null) {
+      Map<String, dynamic> decoded = json.decode(loginResponse.data.toString());
+      accessToken = decoded['accessToken'];
+    }
+    return accessToken;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,13 +164,20 @@ class _LoginState extends State<Login> {
                           setState(() {
                             isLoading = true;
                           });
-                          await Future.delayed(Duration(seconds: 2));
+                          String? accessToken = await _loginUser();
                           setState(() {
                             isLoading = false;
                           });
-                          if (context.mounted) {
+                          if (context.mounted && accessToken != null) {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const Products()));
+                                builder: (context) => Products(token: accessToken)));
+                          } else if(context.mounted){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Login failed. Please try again.'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
                           }
                         }
                       },
