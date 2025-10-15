@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:payments/payments.dart';
 import 'package:payments/products.dart';
 
 void main() {
@@ -62,29 +61,29 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF00796B),
-                padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Payments()),
-                );
-              },
-              child: Text(
-                'Got to Payments',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            // SizedBox(height: 20),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Color(0xFF00796B),
+            //     padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(8),
+            //     ),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.of(context).push(
+            //       MaterialPageRoute(builder: (context) => const Payments()),
+            //     );
+            //   },
+            //   child: Text(
+            //     'Got to Payments',
+            //     style: TextStyle(
+            //       fontSize: 20,
+            //       color: Colors.white,
+            //       fontWeight: FontWeight.w600,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -37,6 +37,17 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+    dependencies {
+        // Retrofit core library
+        implementation 'com.squareup.retrofit2:retrofit:3.0.0'
+        // Converter for JSON (using Gson)
+        implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
+        // Converter for plain text (scalars)
+        implementation 'com.squareup.retrofit2:converter-scalars:3.0.0'
+        // (Optional) OkHttp logging interceptor for debugging network calls
+        implementation 'com.squareup.okhttp3:logging-interceptor:5.2.1'
+    }
 }
 
 flutter {
