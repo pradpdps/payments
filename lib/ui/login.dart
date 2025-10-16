@@ -19,9 +19,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // Example color theme (adjust to match your products page)
-    const primaryColor = Color(0xFF00796B); // Blue
-    const backgroundColor = Color(0xFFF5F5F5); // Light grey
+    const primaryColor = Color(0xFF00796B);
+    const backgroundColor = Color(0xFFF5F5F5);
 
     return Scaffold(
       backgroundColor: backgroundColor,
