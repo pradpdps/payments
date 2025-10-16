@@ -5,7 +5,8 @@ import 'package:payments/utils/native_service.dart';
 import 'package:payments/ui/payments.dart';
 
 class Products extends StatefulWidget {
-  const Products({super.key});
+  final String token;
+  const Products({super.key, required this.token});
 
   @override
   State<Products> createState() => _ProductsState();
@@ -24,12 +25,13 @@ class _ProductsState extends State<Products> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadData(widget.token);
   }
 
-  Future<void> _loadData() async {
-    NativeResponse productResponse = await NativeService.getProducts();
+  Future<void> _loadData(String token) async {
+    NativeResponse productResponse = await NativeService.getProducts(token);
     if (productResponse.success == true && productResponse.data != null) {
+      print(productResponse.data);
       setState(() {
         if (mounted) {
           isLoading = false;
