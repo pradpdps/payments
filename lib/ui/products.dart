@@ -31,7 +31,7 @@ class _ProductsState extends State<Products> {
   Future<void> _loadData(String token) async {
     NativeResponse productResponse = await NativeService.getProducts(token);
     if (productResponse.success == true && productResponse.data != null) {
-      print(productResponse.data);
+      debugPrint(productResponse.data);
       setState(() {
         if (mounted) {
           isLoading = false;
@@ -68,10 +68,12 @@ class _ProductsState extends State<Products> {
             itemBuilder: (context, index) {
               final item = _cart[index];
               return ListTile(
-                leading: Image.asset(item["image"],
+                leading: Image.asset(item["image"] ?? "assets/placeholder.jpg",
                     width: 40, height: 40, fit: BoxFit.cover),
                 title: Text(item["name"]),
-                subtitle: Text("\$${item["price"].toStringAsFixed(2)}"),
+                subtitle: Text(item["price"] != null
+                    ? "\$${item["price"].toStringAsFixed(2)}"
+                    : item["id"] ?? ""),
               );
             },
           ),
@@ -127,7 +129,7 @@ class _ProductsState extends State<Products> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Headphones",
+          "Products",
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -163,7 +165,7 @@ class _ProductsState extends State<Products> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.asset(
-                          product["image"],
+                          product["image"] ?? "assets/placeholder.jpg",
                           width: 90,
                           height: 90,
                           fit: BoxFit.cover,
@@ -194,7 +196,9 @@ class _ProductsState extends State<Products> {
                             Row(
                               children: [
                                 Text(
-                                  "\$${product["price"].toStringAsFixed(2)}",
+                                  product["price"] != null
+                                      ? "\$${product["price"].toStringAsFixed(2)}"
+                                      : product["id"] ?? "",
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,

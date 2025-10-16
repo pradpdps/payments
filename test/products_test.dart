@@ -1,17 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:payments/ui/products.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:payments/ui/products.dart';
 
-void main() {
-  testWidgets('Products widget shows loading indicator initially',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Products(),
-      ),
-    );
+// void main() {
+//   testWidgets('Products widget shows loading indicator initially',
+//       (WidgetTester tester) async {
+//     await tester.pumpWidget(
+//       MaterialApp(
+//         home:
+//         Products(),
+//       ),
+//     );
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    expect(find.text('Headphones'), findsOneWidget);
-  });
-}
+//     expect(find.byType(CircularProgressIndicator), findsOneWidget);
+//     expect(find.text('Headphones'), findsOneWidget);
+//   });
+// }

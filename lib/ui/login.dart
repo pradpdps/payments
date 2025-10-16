@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:payments/ui/products.dart';
 
@@ -18,7 +17,7 @@ class _LoginState extends State<Login> {
   bool isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
 
@@ -27,12 +26,15 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
-  Future<String?> _loginUser() async {
+  Future<String?> _loginUser(String userName, String pwd) async {
     String? accessToken;
-    NativeResponse loginResponse = await NativeService.login("gokul", "12345678");
+    NativeResponse loginResponse = await NativeService.login(userName, pwd);
+    debugPrint("$userName, $pwd, Login response${loginResponse.data}");
     if (loginResponse.success == true && loginResponse.data != null) {
       Map<String, dynamic> decoded = json.decode(loginResponse.data.toString());
       accessToken = decoded['accessToken'];
+    } else {
+      debugPrint("Login failed: ${loginResponse.message}");
     }
     return accessToken;
   }
@@ -105,10 +107,10 @@ class _LoginState extends State<Login> {
                     ),
                   if (!isLogin) const SizedBox(height: 16),
                   TextFormField(
-                    controller: _emailController,
+                    controller: _userNameController,
                     decoration: InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email),
+                      labelText: 'Username',
+                      prefixIcon: Icon(Icons.account_box),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -116,11 +118,12 @@ class _LoginState extends State<Login> {
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return 'Username cannot be empty';
                       }
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                        return 'Enter a valid email';
+                      if (!RegExp(r'^[a-zA-Z0-9_]{3,16}$').hasMatch(value)) {
+                        return 'Username is invalid';
                       }
+
                       return null;
                     },
                   ),
@@ -137,7 +140,7 @@ class _LoginState extends State<Login> {
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
+                        return 'Password cannot be empty';
                       }
                       if (value.length < 6) {
                         return 'Password must be at least 6 characters';
@@ -163,17 +166,22 @@ class _LoginState extends State<Login> {
                           setState(() {
                             isLoading = true;
                           });
-                          String? accessToken = await _loginUser();
+                          String? accessToken = await _loginUser(
+                              _userNameController.text,
+                              _passwordController.text);
                           setState(() {
                             isLoading = false;
                           });
+                          debugPrint('Access Token: $accessToken');
                           if (context.mounted && accessToken != null) {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(token: accessToken)));
-                          } else if(context.mounted){
+                                builder: (context) =>
+                                    Products(token: accessToken)));
+                          } else if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Login failed. Please try again.'),
+                                content:
+                                    Text('Login failed. Please try again.'),
                                 backgroundColor: Colors.red,
                               ),
                             );
@@ -191,23 +199,23 @@ class _LoginState extends State<Login> {
                             ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        isLogin = !isLogin;
-                      });
-                    },
-                    child: Text(
-                      isLogin
-                          ? "Don't have an account? Sign Up"
-                          : "Already have an account? Login",
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 16),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     setState(() {
+                  //       isLogin = !isLogin;
+                  //     });
+                  //   },
+                  //   child: Text(
+                  //     isLogin
+                  //         ? "Don't have an account? Sign Up"
+                  //         : "Already have an account? Login",
+                  //     style: TextStyle(
+                  //       color: primaryColor,
+                  //       fontWeight: FontWeight.w600,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
