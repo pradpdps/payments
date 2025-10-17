@@ -11,7 +11,7 @@ class LoginViewModel extends ChangeNotifier {
 
   Future<String?> login(String username, String password) async {
     isLoading = true;
-    error = null; // start clean
+    error = null;
     notifyListeners();
 
     try {
@@ -21,7 +21,6 @@ class LoginViewModel extends ChangeNotifier {
       debugPrint("$username, login response: ${loginResponse.data}");
 
       if (loginResponse.success == true && loginResponse.data != null) {
-        // decode if it's a JSON string, otherwise try to read as Map
         try {
           final Map<String, dynamic> decoded = loginResponse.data is String
               ? json.decode(loginResponse.data.toString())
@@ -40,11 +39,10 @@ class LoginViewModel extends ChangeNotifier {
           return null;
         }
 
-        // success: clear any previous error and return token
         error = null;
         return token;
       } else {
-        error = loginResponse.message ?? 'Login failed';
+        error = 'Login failed! Please try again.';
         return null;
       }
     } catch (e) {

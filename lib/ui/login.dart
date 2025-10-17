@@ -200,23 +200,23 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              isLogin = !isLogin;
-                              vm.clearError();
-                            });
-                          },
-                          child: Text(
-                            isLogin
-                                ? "Don't have an account? Sign Up"
-                                : "Already have an account? Login",
-                            style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
+                        // TextButton(
+                        //   onPressed: () {
+                        //     setState(() {
+                        //       isLogin = !isLogin;
+                        //       vm.clearError();
+                        //     });
+                        //   },
+                        //   child: Text(
+                        //     isLogin
+                        //         ? "Don't have an account? Sign Up"
+                        //         : "Already have an account? Login",
+                        //     style: TextStyle(
+                        //       color: primaryColor,
+                        //       fontWeight: FontWeight.w600,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
