@@ -1,50 +1,51 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
-import 'package:payments/utils/native_service.dart';
-import 'package:payments/model/native_response.dart';
+// New file
+class Product {
+  final String id;
+  final String name;
+  final String? description;
+  final double? price;
+  final String? image;
 
-class ProductsViewModel extends ChangeNotifier {
-  List<Map<String, dynamic>> products = [];
-  final List<Map<String, dynamic>> cart = [];
-  bool isLoading = true;
+  Product({
+    required this.id,
+    required this.name,
+    this.description,
+    this.price,
+    this.image,
+  });
 
-  List<Map<String, dynamic>> _extractProductsFromJson(String jsonStr) {
-    final List<dynamic> decoded = json.decode(jsonStr);
-    return decoded.map((e) => Map<String, dynamic>.from(e)).toList();
-  }
-
-  Future<void> loadProducts(String token) async {
-    isLoading = true;
-    notifyListeners();
-    try {
-      final NativeResponse productResponse =
-          await NativeService.getProducts(token);
-      if (productResponse.success == true && productResponse.data != null) {
-        products = _extractProductsFromJson(productResponse.data!);
-      }
-    } finally {
-      isLoading = false;
-      notifyListeners();
+  factory Product.fromJson(Map<String, dynamic> json) {
+    final dynamic p = json;
+    String id = (p['id'] ?? p['productId'] ?? p['uuid'] ?? '').toString();
+    final name = (p['name'] ?? p['title'] ?? '').toString();
+    final description = p['description']?.toString();
+    double? price;
+    if (p['price'] is num) {
+      price = (p['price'] as num).toDouble();
+    } else if (p['price'] is String) {
+      price = double.tryParse(p['price']);
     }
+    final image = p['image']?.toString();
+    return Product(
+        id: id,
+        name: name,
+        description: description,
+        price: price,
+        image: image);
   }
 
-  void addToCart(Map<String, dynamic> product) {
-    if (!cart.contains(product)) {
-      cart.add(product);
-      notifyListeners();
-    }
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'description': description,
+        'price': price,
+        'image': image,
+      };
 
-  void removeFromCart(Map<String, dynamic> product) {
-    if (cart.remove(product)) {
-      notifyListeners();
-    }
-  }
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is Product && other.id == id);
 
-  double get total => cart.fold(0.0, (sum, item) {
-        final price = item['price'];
-        if (price is int) return sum + price.toDouble();
-        if (price is double) return sum + price;
-        return sum;
-      });
+  @override
+  int get hashCode => id.hashCode;
 }

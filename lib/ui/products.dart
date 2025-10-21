@@ -1,6 +1,6 @@
 // ...existing code...
 import 'package:flutter/material.dart';
-import 'package:payments/model/product_model.dart';
+import 'package:payments/viewmodel/product_viewmodel.dart';
 import 'package:payments/ui/payments.dart';
 import 'package:provider/provider.dart';
 
@@ -32,14 +32,14 @@ class Products extends StatelessWidget {
                       final item = vm.cart[index];
                       return ListTile(
                         leading: Image.asset(
-                            item["image"] ?? "assets/placeholder.jpg",
+                            item.image ?? "assets/placeholder.jpg",
                             width: 40,
                             height: 40,
                             fit: BoxFit.cover),
-                        title: Text(item["name"]),
-                        subtitle: Text(item["price"] != null
-                            ? "\$${item["price"].toStringAsFixed(2)}"
-                            : item["id"].toString()),
+                        title: Text(item.name),
+                        subtitle: Text(item.price != null
+                            ? "\$${item.price!.toStringAsFixed(2)}"
+                            : item.id.toString()),
                       );
                     },
                   ),
@@ -117,8 +117,7 @@ class Products extends StatelessWidget {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: Image.asset(
-                                    product["image"] ??
-                                        "assets/placeholder.jpg",
+                                    product.image ?? "assets/placeholder.jpg",
                                     width: 90,
                                     height: 90,
                                     fit: BoxFit.cover,
@@ -131,7 +130,7 @@ class Products extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        product["name"],
+                                        product.name,
                                         style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -140,7 +139,7 @@ class Products extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        product["description"],
+                                        product.description ?? "-",
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey[700],
@@ -150,9 +149,9 @@ class Products extends StatelessWidget {
                                       Row(
                                         children: [
                                           Text(
-                                            product["price"] != null
-                                                ? "\$${product["price"].toStringAsFixed(2)}"
-                                                : "Id: ${product["id"].toString()}",
+                                            product.price != null
+                                                ? "\$${product.price!.toStringAsFixed(2)}"
+                                                : "Id: ${product.id.toString()}",
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600,
