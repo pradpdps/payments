@@ -14,7 +14,7 @@ class ProductsViewModel extends ChangeNotifier {
   bool isLoading = true;
   String? error;
 
-  Future<void> loadProducts(String token) async {
+  Future<void> loadProducts(String? token) async {
     isLoading = true;
     error = null;
     notifyListeners();
@@ -38,7 +38,8 @@ class ProductsViewModel extends ChangeNotifier {
   }
 
   void removeFromCart(Product product) {
-    final removed = cart.removeWhere((p) => p.id == product.id);
+    // final removed =
+    cart.removeWhere((p) => p.id == product.id);
     // removeWhere returns void, so check membership before/after:
     if (!cart.any((p) => p.id == product.id)) {
       notifyListeners();

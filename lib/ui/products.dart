@@ -1,18 +1,22 @@
 // ...existing code...
 import 'package:flutter/material.dart';
+import 'package:payments/repos/nativeproducts_repo.dart';
+import 'package:payments/ui/login.dart';
 import 'package:payments/viewmodel/product_viewmodel.dart';
 import 'package:payments/ui/payments.dart';
 import 'package:provider/provider.dart';
 
 class Products extends StatelessWidget {
-  final String token;
+  final String? token;
   const Products({super.key, required this.token});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ProductsViewModel>(
       create: (_) {
-        final vm = ProductsViewModel();
+        final vm = token != null
+            ? ProductsViewModel()
+            : ProductsViewModel(repository: FakeProductRepository([]));
         vm.loadProducts(token);
         return vm;
       },
@@ -93,6 +97,17 @@ class Products extends StatelessWidget {
               ),
               centerTitle: true,
               backgroundColor: Color(0xFF00796B),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.logout, color: Colors.white),
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => LoginPage()),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                ),
+              ],
             ),
             body: Container(
               color: Colors.grey[100],

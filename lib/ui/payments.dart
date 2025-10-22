@@ -56,7 +56,9 @@ class _PaymentsState extends State<Payments> {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      '\$${widget.amount.toStringAsFixed(2)}',
+                      widget.amount == 0.0
+                          ? '\$125'
+                          : '\$${widget.amount.toStringAsFixed(2)}',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,

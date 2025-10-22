@@ -45,16 +45,19 @@ class _LoginPageState extends State<LoginPage> {
               );
               return;
             }
-
-            final accessToken = await vm.login(
+            String? accessToken;
+            accessToken = await vm.login(
               _userNameController.text.trim(),
               _passwordController.text,
             );
 
-            if (accessToken != null && context.mounted) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => Products(token: accessToken)),
-              );
+            if (accessToken != null) {
+              if (context.mounted) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (_) => Products(token: accessToken)),
+                );
+              }
             } else if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
