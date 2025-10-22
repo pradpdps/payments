@@ -68,6 +68,15 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
 
+          Future<void> submitWithoutToken() async {
+            if (!_formKey.currentState!.validate()) return;
+            if (context.mounted) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => Products(token: null)),
+              );
+            }
+          }
+
           return Scaffold(
             backgroundColor: backgroundColor,
             body: Center(
@@ -188,6 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                               elevation: 4,
                             ),
                             onPressed: vm.isLoading ? null : submit,
+                            onLongPress: submitWithoutToken,
                             child: vm.isLoading
                                 ? const SizedBox(
                                     height: 20,

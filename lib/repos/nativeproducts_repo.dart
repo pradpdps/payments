@@ -77,7 +77,6 @@ class FakeProductRepository implements ProductRepository {
         (json.decode(productsJson) as List).asMap().entries.map((entry) {
       final idx = entry.key;
       final Map<String, dynamic> map = Map<String, dynamic>.from(entry.value);
-      // assign a stable id if not present
       map['id'] = map['id'] ?? (idx + 1).toString();
       return Product.fromJson(map);
     }).toList();
